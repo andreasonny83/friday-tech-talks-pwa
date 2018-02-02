@@ -1,0 +1,43 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<header>
+  <div id="stripes"></div>
+  <div class="container header-container">
+      <h1>Welcome to {{ title }}</h1>
+      <h2>
+        {{ (appInfo$ | async)?.payload.val().name }}
+        <span>v.{{ version }}</span>
+      </h2>
+  </div>
+</header>
+
+<div id="content">
+  <section id="primary">
+    <div class="container">
+      <h3 mat-subheader>Coming Next</h3>
+
+      <mat-list>
+        <h4 mat-subheader>Speakers</h4>
+        <mat-list-item *ngFor="let talk of talks | async" @talks>
+          <mat-icon mat-list-icon>mic</mat-icon>
+          <h4 mat-line>{{ talk.title }}</h4>
+          <h4 mat-line>{{ talk.presenter }}</h4>
+          <p mat-line>{{ talk.updated | date }}</p>
+        </mat-list-item>
+      </mat-list>
+
+      <button mat-raised-button
+              color="primary"
+              (click)="addItem('test')">Add</button>
+    </div>
+  </section>
+
+  <section id="secondary">
+    <div class="container"></div>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    {{ (appInfo$ | async)?.payload.val().name }} &copy; 2018
+  </div>
+</footer>
