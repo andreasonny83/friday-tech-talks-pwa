@@ -45,7 +45,6 @@ Thumbs.db
 # Cypress.io
 /cypress/videos/*
 /cypress/screenshots/*
-/cypress.json
 
 # Firebase
 /.firebaserc
