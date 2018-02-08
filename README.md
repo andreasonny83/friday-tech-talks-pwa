@@ -2,6 +2,8 @@
 
 > Live app running at: https://friday-tech-talk-pwa.firebaseapp.com/
 
+[![CircleCI](https://circleci.com/gh/andreasonny83/friday-tech-talks-pwa/tree/master.svg?style=svg)](https://circleci.com/gh/andreasonny83/friday-tech-talks-pwa/tree/master)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.7.
 
 ## Firebase
