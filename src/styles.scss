@@ -7,3 +7,17 @@ html, body {
   font-size: 14px;
   font-smoothing: antialiased;
 }
+
+.container {
+  max-width: 920px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: initial;
+}
+
+.centered {
+  text-align: center;
+  align-self: center;
+}

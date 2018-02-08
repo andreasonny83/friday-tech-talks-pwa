@@ -7,6 +7,8 @@ import {
   AngularFireObject,
 } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { map, filter } from 'rxjs/operators';
+import * as firebase from 'firebase';
 import {
   style,
   animate,
@@ -19,16 +21,20 @@ import {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   animations: [
-    trigger('talks', [
+    trigger('talkItem', [
       transition(':enter', [
-        style({ transform: 'scale(0.5)', opacity: 0 }),
-        animate('1s cubic-bezier(.8,-0.6,0.2,1.5)',
-          style({ transform: 'scale(1)', opacity: 1 }))
+        style({ transform: 'translateY(25px)', opacity: 0 }),
+        animate('1s cubic-bezier(.8,-0.6,0.2,1.5)')
       ]),
       transition(':leave', [
-        style({ transform: 'scale(1)', opacity: 1, height: '*' }),
-        animate('1s cubic-bezier(.8,-0.6,0.2,1.5)',
-          style({ transform: 'scale(0.5)', opacity: 0, height: '0px', margin: '0px' }))
+        style({ transform: 'translateY(25px)', opacity: 1 }),
+        animate('1s cubic-bezier(.8,-0.6,0.2,1.5)')
+      ]),
+    ]),
+    trigger('spinner', [
+      transition(':enter', [
+        style({ transform: 'scale(0.1)', opacity: 0 }),
+        animate('1s cubic-bezier(.8,-0.6,0.2,1.5)')
       ]),
     ])
   ],
@@ -39,7 +45,11 @@ export class AppComponent implements OnInit {
   public logoSize: string;
   public appInfo$: Observable<any>;
   public talks: Observable<any[]>;
+  public comingTalks$: Observable<any[]>;
+  public pastTalks$: Observable<any[]>;
+
   private talksRef: AngularFireList<any>;
+  private nextFriday: number;
 
   constructor(
     public snackBar: MatSnackBar,
@@ -48,9 +58,9 @@ export class AppComponent implements OnInit {
   ) {
     this.title = 'Friday Tech Talks PWA';
     this.version = '0.0.8';
-    this.logoSize = '150';
 
     this.talks = db.list('talks').valueChanges();
+    this.nextFriday = this.getNextTalkDate(5, 16);
     this.talksRef = db.list('talks');
 
     swUpdate.available.subscribe(event => {
@@ -67,7 +77,22 @@ export class AppComponent implements OnInit {
       this.checkForUpdate();
     }
 
+    this.comingTalks$ = this.db
+      .list('talks', ref => ref.orderByChild('talkTimestamp').startAt(this.nextFriday))
+      .valueChanges()
+      .delay(1000);
+
+      this.pastTalks$ = this.db
+        .list('talks', ref => ref.orderByChild('invertedTimestamp'))
+        .valueChanges()
+        .map(talks => talks.filter(talk =>
+          talk['talkTimestamp'] !== this.nextFriday));
+
     setTimeout(() => this.showMsg('Welcome!'), 1000);
+
+    if (this.swUpdate.isEnabled) {
+      this.checkForUpdate();
+    }
   }
 
   addItem(newName: string) {
@@ -75,11 +100,36 @@ export class AppComponent implements OnInit {
       title: newName,
       presenter: 'No Name',
       updated: new Date().getTime(),
+      talkTimestamp: this.nextFriday,
+      timestamp: firebase.database.ServerValue.TIMESTAMP,
+    })
+    .once('value')
+    .then(snapshot => {
+      const invertedTimestamp = snapshot.val().timestamp * -1;
+      this.talksRef.update(snapshot.key, { invertedTimestamp });
     });
   }
 
   private checkForUpdate() {
     this.swUpdate.checkForUpdate();
+  }
+
+  private getNextTalkDate(dayOfWeek: number, timeOfTheDay: number) {
+    const now: Date = new Date();
+    const utcDate: Date = new Date(
+      now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes());
+
+    let offset = (7 + dayOfWeek - now.getUTCDay()) % 7;
+
+    if (!offset && now.getUTCHours() >= timeOfTheDay) {
+      offset += 7;
+    }
+
+    utcDate.setDate(now.getUTCDate() + offset);
+    utcDate.setHours(timeOfTheDay, 0, 0);
+    utcDate.setSeconds(0, 0);
+
+    return utcDate.valueOf();
   }
 
   private showMsg(msg: string): void {

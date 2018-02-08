@@ -9,6 +9,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:run:ci": "cypress run --record",
+    "deploy": "firebase deploy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "run-p --race start cypress:run",
@@ -32,8 +33,8 @@
     "@angular/router": "^5.2.0",
     "@angular/service-worker": "^5.2.0",
     "angularfire2": "^5.0.0-rc.6",
-    "firebase": "^4.9.1",
     "core-js": "^2.4.1",
+    "firebase": "^4.9.1",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },
