@@ -6,8 +6,7 @@ jobs:
         environment:
           ## this enables colors in the output
           TERM: xterm
-    working_directory: ~/src
     steps:
       - checkout
       - run: npm install
-      - run: $(npm bin)/cypress run --record
+      - run: npm run e2e:ci

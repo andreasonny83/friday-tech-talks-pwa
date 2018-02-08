@@ -8,9 +8,11 @@
     "build": "ng build --prod",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
+    "cypress:run:ci": "cypress run --record",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "run-p --race start cypress:run",
+    "e2e:ci": "run-p --race start cypress:run:ci",
     "firebase:add": "firebase use --add",
     "prefirebase:deploy": "npm run build",
     "firebase:deploy": "firebase deploy"
