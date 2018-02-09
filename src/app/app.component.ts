@@ -24,17 +24,17 @@ import {
     trigger('talkItem', [
       transition(':enter', [
         style({ transform: 'translateY(25px)', opacity: 0 }),
-        animate('1s cubic-bezier(.8,-0.6,0.2,1.5)')
+        animate('1s 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)')
       ]),
       transition(':leave', [
         style({ transform: 'translateY(25px)', opacity: 1 }),
-        animate('1s cubic-bezier(.8,-0.6,0.2,1.5)')
+        animate('1s 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)')
       ]),
     ]),
     trigger('spinner', [
       transition(':enter', [
         style({ transform: 'scale(0.1)', opacity: 0 }),
-        animate('1s cubic-bezier(.8,-0.6,0.2,1.5)')
+        animate('1s 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)')
       ]),
     ])
   ],

@@ -5,22 +5,16 @@ header {
 }
 
 header h1 {
-  color: #fff;
+  margin-bottom: 20px;
   font-size: 32px;
   font-weight: 300;
-  margin-bottom: 20px;
+  color: #fff;
 }
 
 header span {
   font-size: 14px;
   font-weight: 100;
   color: #fff;
-}
-
-.container {
-  max-width: 920px;
-  margin: 0 auto;
-  position: relative;
 }
 
 #stripes {
@@ -33,13 +27,24 @@ header span {
 }
 
 .header-container {
-  padding-top: 70px;
-  padding-bottom: 100px;
+  padding: 70px 0;
   position: relative;
-  height: 160px;
 }
 
-h3 {
+.spinner-container {
+  position: relative;
+  display: flex;
+  padding: 12px;
+  margin: 80px 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0px 6px   20px 0px rgba(0, 0, 0, 0.23),
+              0 0 1px 0 rgba(0, 0, 0, 0.4);
+  background-color: #fff;
+}
+
+section h2 {
   color: #24b47e;
   font-weight: 600;
   font-size: 22px;
@@ -49,6 +54,12 @@ h3 {
   position: relative;
   overflow: hidden;
   padding-bottom: 200px;
+}
+
+#primary,
+#secondary {
+  margin: 50px 0 100px;
+  min-height: 300px;
 }
 
 #secondary {
@@ -64,7 +75,7 @@ h3 {
   width: 100%;
   height: 180%;
   top: 0;
-  transform: skewY(-12deg);
+  transform: skewY(-11deg);
   background: #e0ebf5;
 }
 
@@ -78,10 +89,10 @@ footer {
   }
 
   .header-container {
-    height: 500px;
+    padding: 150px 0 300px;
   }
 
   #stripes {
-    transform: skewY(-12deg);
+    transform: skewY(-11deg);
   }
 }

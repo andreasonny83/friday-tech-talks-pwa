@@ -13,7 +13,7 @@
 <div id="content">
   <section id="primary" class="talk_section">
     <div class="container">
-      <h2 mat-subheader>Coming Next</h2>
+      <h2 mat-subheader class="centered">Coming Next</h2>
 
       <div *ngIf="comingTalks$ | async; let comingTalks; else loading">
         <mat-list *ngIf="comingTalks.length > 0; else noResult" @talkItem>
@@ -31,22 +31,14 @@
 
         <button mat-raised-button color="primary" (click)="addItem('test')">Add</button>
       </div>
-
-      <ng-template #loading>
-        <mat-spinner @spinner
-                    class="centered spinner"
-                     diameter="80"
-                     color="primary"
-                     mode="indeterminate"></mat-spinner>
-      </ng-template>
     </div>
   </section>
 
   <section id="secondary" class="talk_section">
     <div class="container">
-      <h2 mat-subheader>Past Talks</h2>
+      <h2 mat-subheader class="centered">Past Talks</h2>
 
-      <div *ngIf="pastTalks$ | async; let pastTalks; else pastTalksLoading">
+      <div *ngIf="pastTalks$ | async; let pastTalks; else loading">
         <mat-list *ngIf="pastTalks.length > 0; else pastTalksNoResult" @talkItem>
           <h3 mat-subheader>Speakers</h3>
           <mat-list-item *ngFor="let talk of pastTalks">
@@ -59,16 +51,18 @@
 
         <ng-template #pastTalksNoResult><p>Nothing here yet</p></ng-template>
       </div>
-
-      <ng-template #pastTalksLoading>
-        <mat-spinner class="centered"
-                     diameter="80"
-                     color="primary"
-                     mode="indeterminate"></mat-spinner>
-      </ng-template>
     </div>
   </section>
 </div>
+
+<ng-template #loading>
+  <div @spinner class="spinner-container centered">
+    <mat-spinner class="centered"
+                diameter="80"
+                color="primary"
+                mode="indeterminate"></mat-spinner>
+  </div>
+</ng-template>
 
 <footer>
   <div class="container">
