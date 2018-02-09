@@ -11,7 +11,7 @@ describe('Landing page', function () {
 describe('Coming talks', function () {
   it('The page should contain a "Coming next" section', function () {
     cy.get('#primary').within(() => {
-      cy.get('h3').contains('Coming Next');
+      cy.get('h2').contains('Coming Next');
     });
   });
 });
