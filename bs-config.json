@@ -1,0 +1,6 @@
+{
+  "open": false,
+  "logLevel": "silent",
+  "port": 4200,
+  "server": { "baseDir": "./dist" }
+}

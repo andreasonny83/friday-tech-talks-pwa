@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.appInfo$ = this.db.object('appInfo').snapshotChanges();
 
-    this.appInfo$.subscribe(res => console.log(res));
+    // this.appInfo$.subscribe(res => console.log(res.payload.val()));
     if (this.swUpdate.isEnabled) {
       this.checkForUpdate();
     }

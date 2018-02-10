@@ -15,14 +15,36 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
 
-      - run: npm install
+      - run:
+          name: Node dependencies
+          command: npm install
+
+      - run:
+          name: Firebase Tools
+          command: npm install -g firebase-tools@3.9.1 --unsafe-perm
 
       - save_cache:
           key: v1-dependencies-{{ checksum "package.json" }}
           paths:
-            - node_modules
+            - ./node_modules
 
-      - run: npm run e2e:ci
+      - run:
+          name: Firebase Config
+          command: npm run config
+
+      - run:
+          name: Build
+          command: npm run build
+
+      - run:
+          name: Unit Tests
+          command: npm test
+
+      - run:
+          name: E2E tests
+          command: npm run e2e:ci
+
+      - run:
+          name: Deploy
+          command: firebase deploy --token=$FIREBASE_TOKEN --project=$PROJECT_ID --non-interactive >/dev/null
