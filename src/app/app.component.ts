@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     private db: AngularFireDatabase,
   ) {
     this.title = 'Friday Tech Talks PWA';
-    this.version = '0.0.8';
+    this.version = '0.0.9';
 
     this.talks = db.list('talks').valueChanges();
     this.nextFriday = this.getNextTalkDate(5, 16);
