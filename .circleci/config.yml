@@ -34,12 +34,12 @@ jobs:
           command: npm run config
 
       - run:
-          name: Build
-          command: npm run build
+          name: Unit Tests
+          command: npm run test:ci
 
       - run:
-          name: Unit Tests
-          command: npm test
+          name: Build
+          command: npm run build
 
       - run:
           name: E2E tests

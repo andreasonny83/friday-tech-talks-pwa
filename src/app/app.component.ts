@@ -65,17 +65,12 @@ export class AppComponent implements OnInit {
 
     swUpdate.available.subscribe(event => {
       this.showMsg('a new version is available. ' +
-        'Please refresh this page to load the latest version.');
+        'Please refresh this page to load the latest version.', 10000);
     });
   }
 
   ngOnInit() {
     this.appInfo$ = this.db.object('appInfo').snapshotChanges();
-
-    // this.appInfo$.subscribe(res => console.log(res.payload.val()));
-    if (this.swUpdate.isEnabled) {
-      this.checkForUpdate();
-    }
 
     this.comingTalks$ = this.db
       .list('talks', ref => ref.orderByChild('talkTimestamp').startAt(this.nextFriday))
@@ -85,14 +80,15 @@ export class AppComponent implements OnInit {
       this.pastTalks$ = this.db
         .list('talks', ref => ref.orderByChild('invertedTimestamp'))
         .valueChanges()
+        .delay(1000)
         .map(talks => talks.filter(talk =>
           talk['talkTimestamp'] !== this.nextFriday));
-
-    setTimeout(() => this.showMsg('Welcome!'), 1000);
 
     if (this.swUpdate.isEnabled) {
       this.checkForUpdate();
     }
+
+    setTimeout(() => this.showMsg('Welcome!'), 1000);
   }
 
   addItem(newName: string) {
@@ -132,9 +128,7 @@ export class AppComponent implements OnInit {
     return utcDate.valueOf();
   }
 
-  private showMsg(msg: string): void {
-    this.snackBar.open(msg, '', {
-      duration: 2000,
-    });
+  private showMsg(msg: string, duraton: number = 1000): void {
+    this.snackBar.open(msg, '', { duration: duraton });
   }
 }
