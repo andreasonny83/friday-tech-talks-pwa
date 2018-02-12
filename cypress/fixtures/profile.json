@@ -1,5 +1,5 @@
 {
   "name": "Jane Doe",
-  "email": "jane.doe@example.com",
-  "password": "qwerty12345"
+  "email": "test-user@cypress.com",
+  "password": "Passw0rd123"
 }

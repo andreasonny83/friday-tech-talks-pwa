@@ -11,6 +11,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   - [Deployment](#deployment)
     - [Deploying from your local machine](#deploying-from-your-local-machine)
     - [Continuous Deployment](#continuous-deployment)
+  - [Multiple environments](#multiple-environments)
+  - [Firebase setup for multiple projects](#firebase-setup-for-multiple-projects)
   - [Running unit tests](#running-unit-tests)
   - [Running end-to-end tests](#running-end-to-end-tests)
   - [Contributing](#contributing)
@@ -26,7 +28,7 @@ project from [console.firebase.google.com](https://console.firebase.google.com/)
 
 Once done run `npm run firebase:login` to login into your Firebase account,
 then `npm run firebase:add` in your terminal from inside this
-project's root directory and select your new project from the list and name it `default`.
+project's root directory and select your new project from the list and name it `production`.
 
 Navigate to your [Firebase console](https://console.firebase.google.com/),
 select your project from the list - then enter inside the RealTime Database tab.
@@ -116,6 +118,41 @@ To get the token on your local machine.
 
 This project already contains an automatic deployment configuration using CircleCI.
 You can see our configuration inside the `.circleci` folder.
+
+## Multiple environments
+
+You may want to use different Firebase projects for running the automated E2E
+tests during the deployment pipeline.
+This project already supports a Staging environmet implementation out-of-the-box.
+
+## Firebase setup for multiple projects
+
+To link a new Firebasse project to this app, make sure you have already configured
+your production project with the instructions listed in the [Setup](#setup) section.
+
+Then create add a new Staging project with the following steps:
+
+1. Run `npm run firebase:add` to add a new Firebase project
+1. Select your staging Firebase project from the list
+1. Name it `staging`
+
+Now your local `` file should looks like the following
+
+```json
+{
+  "projects": {
+    "production": "your-production-firebase-project",
+    "staging": "your-staging-firebase-project"
+  }
+}
+```
+
+Now, you need to generate a new `firebase.ts` file to be used in your staging
+project.
+To do that, just run `npm run config:staging`.
+
+Now, you can switch between the 2 project with `npm run firebase:use:production`
+and `npm run firebase:use:staging`.
 
 ## Running unit tests
 

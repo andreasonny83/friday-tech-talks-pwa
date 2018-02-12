@@ -1,17 +1,17 @@
 describe('Landing page', function () {
   it('Visit the landing page', function () {
-    cy.visit('http://localhost:4200');
+    cy.visitLogin();
   });
 
   it('The page should contain a title', function () {
-    cy.get('h1').contains('Welcome to Friday Tech Talks PWA');
+    cy
+      .get('h1')
+      .contains(/^Welcome to [\w ]+$/);
   });
-});
 
-describe('Coming talks', function () {
-  it('The page should contain a "Coming next" section', function () {
-    cy.get('#primary').within(() => {
-      cy.get('h2').contains('Coming Next');
+  it('The page should contain a version number', function () {
+    cy
+      .get('#appVersion')
+      .contains(/v.[0-9].[0-9].[0-9]$/);
     });
-  });
 });

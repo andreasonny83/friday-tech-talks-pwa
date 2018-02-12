@@ -23,3 +23,16 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('visitLogin', () => {
+  let baseUrl = 'http://localhost:4200';
+  baseUrl = Cypress.env('CI_URL') || baseUrl;
+
+  return cy.visit(baseUrl);
+});
+
+declare namespace Cypress {
+  interface Chainable {
+    visitLogin: () => any;
+  }
+}
