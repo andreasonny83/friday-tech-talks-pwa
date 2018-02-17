@@ -4,11 +4,14 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFireModule, FirebaseApp, FirebaseAppConfig } from 'angularfire2';
-import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
+import {
+  AngularFireDatabase,
+  AngularFireDatabaseModule,
+  AngularFireList,
+} from 'angularfire2/database';
 import { AppComponent } from './app.component';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { AngularFireList } from 'angularfire2/database';
 
 const FIREBASE_APP_NAME = (Math.random() + 1).toString(36).substring(7);
 const COMMON_CONFIG = {

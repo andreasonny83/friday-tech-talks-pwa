@@ -1,0 +1,53 @@
+<div id="content">
+  <section id="primary" class="talk_section">
+    <div class="container">
+      <h2 mat-subheader class="centered">Coming Next</h2>
+
+      <div *ngIf="comingTalks$ | async; let comingTalks; else loading">
+        <mat-list *ngIf="comingTalks.length > 0; else noResult" @talkItem>
+          <h3 mat-subheader>Speakers</h3>
+          <mat-list-item *ngFor="let talk of comingTalks; last as last">
+            <mat-icon mat-list-icon>mic</mat-icon>
+            <h4 mat-line>{{ talk.title }}</h4>
+            <h4 mat-line>{{ talk.presenter }}</h4>
+            <p mat-line>{{ talk.updated | date }}</p>
+            <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+          </mat-list-item>
+        </mat-list>
+
+        <ng-template #noResult><p>No Talks yet</p></ng-template>
+
+        <button mat-raised-button color="primary" (click)="addItem('test')">Add</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="secondary" class="talk_section">
+    <div class="container">
+      <h2 mat-subheader class="centered">Past Talks</h2>
+
+      <div *ngIf="pastTalks$ | async; let pastTalks; else loading">
+        <mat-list *ngIf="pastTalks.length > 0; else pastTalksNoResult" @talkItem>
+          <h3 mat-subheader>Speakers</h3>
+          <mat-list-item *ngFor="let talk of pastTalks">
+            <mat-icon mat-list-icon>mic</mat-icon>
+            <h4 mat-line>{{ talk.title }}</h4>
+            <h4 mat-line>{{ talk.presenter }}</h4>
+            <p mat-line>{{ talk.updated | date }}</p>
+          </mat-list-item>
+        </mat-list>
+
+        <ng-template #pastTalksNoResult><p>Nothing here yet</p></ng-template>
+      </div>
+    </div>
+  </section>
+
+  <ng-template #loading>
+    <div @spinner class="spinner-container centered">
+      <mat-spinner class="centered"
+                  diameter="70"
+                  color="primary"
+                  mode="indeterminate"></mat-spinner>
+    </div>
+  </ng-template>
+</div>

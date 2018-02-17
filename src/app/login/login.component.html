@@ -1,0 +1,30 @@
+<form novalidate
+      [formGroup]="loginForm"
+      class="loginForm"
+      (submit)="signIn()">
+  <mat-form-field>
+    <input matInput
+           autofocus
+           id="email"
+           type="email"
+           formControlName="email">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput
+           type="password"
+           id="password"
+           formControlName="password">
+  </mat-form-field>
+
+  <button mat-raised-button
+          id="loginBtn"
+          color="primary"
+          type="submit"
+          [disabled]="loginForm.invalid"
+          name="action">LOGIN</button>
+
+  <span id="err">
+    <small>{{ errorMsg }}</small>
+  </span>
+</form>

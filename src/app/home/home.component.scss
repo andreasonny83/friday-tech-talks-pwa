@@ -1,0 +1,52 @@
+// Copyright (c) 2018 AndreaSonny <andreasonny83@gmail.com> (https://github.com/andreasonny83)
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+.spinner-container {
+  position: relative;
+  display: flex;
+  padding: 12px;
+  margin: 80px 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  box-shadow: 0px 5px   20px 0px rgba(0, 0, 0, 0.21),
+              0 0 1px 0 rgba(0, 0, 0, 0.4);
+  background-color: #fff;
+}
+
+h2 {
+  color: #24b47e;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+#content {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 200px;
+}
+
+#primary,
+#secondary {
+  margin: 50px 0 100px;
+  min-height: 300px;
+}
+
+#secondary {
+  position: relative;
+  padding-top: 140px;
+  min-height: 270px;
+}
+
+#secondary:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 180%;
+  top: 0;
+  transform: skewY(-11deg);
+  background: #e0ebf5;
+}
