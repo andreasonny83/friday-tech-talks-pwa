@@ -16,14 +16,14 @@ jobs:
       - checkout
 
       - restore_cache:
-            key: dependency-cache-test-v1-{{ checksum "package.json" }}
+            key: dependency-cache-test-v2-{{ checksum "package.json" }}
 
       - run:
           name: Node dependencies
           command: npm install
 
       - save_cache:
-            key: dependency-cache-test-v1-{{ checksum "package.json" }}
+            key: dependency-cache-test-v2-{{ checksum "package.json" }}
             paths:
               - ./node_modules
 
@@ -57,14 +57,14 @@ jobs:
       - checkout
 
       - restore_cache:
-            key: dependency-cache-prod-{{ checksum "package.json" }}
+            key: dependency-cache-prod-v2-{{ checksum "package.json" }}
 
       - run:
           name: Node dependencies
           command: npm install
 
       - save_cache:
-          key: dependency-cache-prod-{{ checksum "package.json" }}
+          key: dependency-cache-prod-v2-{{ checksum "package.json" }}
           paths:
             - ./node_modules
 
@@ -88,6 +88,7 @@ workflows:
       - deploy:
           requires:
             - tests
+          # Deploy only from master branch
           filters:
             branches:
               only: master
