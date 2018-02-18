@@ -5,7 +5,8 @@
   <mat-form-field>
     <input matInput
            autofocus
-           id="email"
+           id="username"
+           name="username"
            type="email"
            formControlName="email">
   </mat-form-field>
@@ -14,6 +15,7 @@
     <input matInput
            type="password"
            id="password"
+           name="password"
            formControlName="password">
   </mat-form-field>
 
@@ -21,10 +23,10 @@
           id="loginBtn"
           color="primary"
           type="submit"
-          [disabled]="loginForm.invalid"
+          [disabled]="loginForm.pristine || loginForm.invalid || waiting"
           name="action">LOGIN</button>
 
-  <span id="err">
-    <small>{{ errorMsg }}</small>
+  <span id="error" *ngIf="error && loginForm.pristine">
+    <small>Username and/or password is incorrect.</small>
   </span>
 </form>

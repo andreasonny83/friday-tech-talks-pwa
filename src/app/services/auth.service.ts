@@ -8,12 +8,13 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
+import { FirebaseAuth } from '@firebase/auth-types';
 
 @Injectable()
 export class AuthService {
   public authState: Observable<firebase.User>;
-
-  private userDetails: firebase.User;
+  public userDetails: firebase.User;
+  public auth: FirebaseAuth;
 
   constructor(
     private firebaseAuth: AngularFireAuth,
@@ -21,6 +22,7 @@ export class AuthService {
   ) {
     this.authState = firebaseAuth.authState;
     this.userDetails = null;
+    this.auth = firebaseAuth.auth;
 
     this.authState
       .subscribe(user => this.userDetails = user || null);

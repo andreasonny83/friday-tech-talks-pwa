@@ -1,9 +1,14 @@
 {
   "rules": {
     ".read": "auth != null",
-    ".write": "auth != null",
     "appInfo": {
       ".read": "true"
-    }
+    },
+    "talks": {
+      "$talks_uid": {
+        ".write": "!data.exists() || data.child('author').val() === auth.uid"
+      }
+    },
+    "users": {}
   }
 }

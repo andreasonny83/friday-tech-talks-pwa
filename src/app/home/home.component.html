@@ -8,9 +8,15 @@
           <h3 mat-subheader>Speakers</h3>
           <mat-list-item *ngFor="let talk of comingTalks; last as last">
             <mat-icon mat-list-icon>mic</mat-icon>
-            <h4 mat-line>{{ talk.title }}</h4>
-            <h4 mat-line>{{ talk.presenter }}</h4>
-            <p mat-line>{{ talk.updated | date }}</p>
+            <h4 matLine>{{ talk.title }}</h4>
+            <p matLine>by: {{ talk.presenter }}</p>
+            <p matLine>Last update: {{ talk.updated | date }}</p>
+            <p matLine>Presenting on: {{ talk.talkTimestamp | date }}</p>
+            <button mat-icon-button
+                    *ngIf="userHasPermission(talk.author)"
+                    (click)="deleteItem(talk.id)">
+              <mat-icon color="warn">delete</mat-icon>
+            </button>
             <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
           </mat-list-item>
         </mat-list>
@@ -31,9 +37,9 @@
           <h3 mat-subheader>Speakers</h3>
           <mat-list-item *ngFor="let talk of pastTalks">
             <mat-icon mat-list-icon>mic</mat-icon>
-            <h4 mat-line>{{ talk.title }}</h4>
-            <h4 mat-line>{{ talk.presenter }}</h4>
-            <p mat-line>{{ talk.updated | date }}</p>
+            <h4 matLine>{{ talk.title }}</h4>
+            <p matLine>Presented on: {{ talk.talkTimestamp | date }}</p>
+            <p matLine>by: {{ talk.presenter }}</p>
           </mat-list-item>
         </mat-list>
 

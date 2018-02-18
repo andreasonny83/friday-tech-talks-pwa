@@ -15,6 +15,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs/Observable';
 import { map, filter } from 'rxjs/operators';
 import * as firebase from 'firebase';
@@ -53,6 +54,7 @@ export class HomeComponent implements OnInit {
   constructor(
     public snackBar: MatSnackBar,
     private db: AngularFireDatabase,
+    private authService: AuthService,
   ) {
     this.talksRef = db.list('talks');
     this.talks = this.talksRef.valueChanges();
@@ -75,10 +77,17 @@ export class HomeComponent implements OnInit {
           talk['talkTimestamp'] !== this.nextFriday));
   }
 
-  addItem(newName: string) {
+  addItem(newName: string): void {
+    // this.authService.auth.currentUser.updateProfile({
+    //   displayName: null,
+    //   photoURL: this.authService.auth.currentUser.photoURL,
+    // });
+
     this.talksRef.push({
       title: newName,
-      presenter: 'No Name',
+      presenter: this.authService.userDetails.displayName ||
+        this.authService.userDetails.email,
+      author: this.authService.userDetails.uid,
       updated: new Date().getTime(),
       talkTimestamp: this.nextFriday,
       timestamp: firebase.database.ServerValue.TIMESTAMP,
@@ -86,8 +95,22 @@ export class HomeComponent implements OnInit {
     .once('value')
     .then(snapshot => {
       const invertedTimestamp = snapshot.val().timestamp * -1;
-      this.talksRef.update(snapshot.key, { invertedTimestamp });
+      this.talksRef.update(snapshot.key, {
+        id: snapshot.key,
+        invertedTimestamp,
+      });
     });
+  }
+
+  public deleteItem(itemId: string): void {
+    this.talksRef.remove(itemId)
+      .then(_ => this.snackBar.open('item deleted!', null, { duration: 3000 }))
+      .catch(_ => this.snackBar.open(
+        'You don\'t have permission to delete this item', null, { duration: 3000 }));
+  }
+
+  public userHasPermission(userId: string): boolean {
+    return this.authService.auth.currentUser.uid === userId;
   }
 
   private getNextTalkDate(dayOfWeek: number, timeOfTheDay: number) {

@@ -15,7 +15,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  errorMsg: string;
+  error: boolean;
+  waiting: boolean;
   loginForm: FormGroup;
 
   constructor(
@@ -31,16 +32,20 @@ export class LoginComponent implements OnInit {
   }
 
   signIn() {
+    this.error = false;
+    this.waiting = true;
+
     this.authService
       .signIn(
         this.loginForm.get('email').value,
         this.loginForm.get('password').value,
       )
-      .then((res) => {
-        console.log(res);
-        this.router.navigate(['home']);
-      })
-      .catch((err) => console.log('error: ' + err));
+      .then(res => this.router.navigate(['home']))
+      .catch((err) => {
+        this.error = true;
+        this.waiting = false;
+        this.loginForm.markAsPristine();
+      });
   }
 
   private createForm() {
