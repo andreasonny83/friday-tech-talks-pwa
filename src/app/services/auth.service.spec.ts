@@ -1,3 +1,8 @@
+// Copyright (c) 2018 AndreaSonny <andreasonny83@gmail.com> (https://github.com/andreasonny83)
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 import { TestBed, inject } from '@angular/core/testing';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';

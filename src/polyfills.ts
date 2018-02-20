@@ -1,3 +1,8 @@
+// Copyright (c) 2018 AndreaSonny <andreasonny83@gmail.com> (https://github.com/andreasonny83)
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.

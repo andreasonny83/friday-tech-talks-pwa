@@ -4,6 +4,7 @@ import { MatSnackBarModule } from '@angular/material';
 import { AngularFireModule, FirebaseApp, FirebaseAppConfig } from 'angularfire2';
 import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthService } from '../services/auth.service';
 
 import { HomeComponent } from './home.component';
 
@@ -19,6 +20,14 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
+  class AuthServiceStub {
+    signIn(email: string, password: string): Promise<any> {
+      return Promise.resolve(true);
+    }
+
+    signOut() {}
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ HomeComponent ],
@@ -29,6 +38,9 @@ describe('HomeComponent', () => {
         AngularFireDatabaseModule,
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        { provide: AuthService, useClass: AuthServiceStub },
+      ],
     })
     .compileComponents();
   }));
